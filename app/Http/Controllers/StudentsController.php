@@ -17,7 +17,7 @@ class StudentsController extends Controller
     public function index()
     {
         $allStudents = Students::orderBy('id','DESC')->where('cid', Session::get('cid'))->get();
-        return view('admin/students/index')->with('allStudents', $allStudents);
+        return view('students/details/index')->with('allStudents', $allStudents);
     }
 
     /**
@@ -102,7 +102,7 @@ class StudentsController extends Controller
             'password' => bcrypt('password')
         ]);
 
-        return redirect('admin/students')->with('success', 'Student Added Successfully!');
+        return redirect('students/details')->with('success', 'Student Added Successfully!');
     }
 
     /**
@@ -136,27 +136,58 @@ class StudentsController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request->all());
+        //get stored student details
         $student_info = Students::find($request->input('id'));
-        $sibling_info = Students::where('id', $request->input('sibling_id'))->first();
-        $old_parent_id = $sibling_info->parent_id;
-        if (empty($request->input('sibling_id'))){
-            $parent_id = Students::where('cid', $request->input('cid'))->max('parent_id')+1;
-
-            //delete when no more siblings to student
-            $parent_info = Students::where('cid', $request->input('cid'))->where('parent_id', $old_parent_id)->get();
-            if (count($parent_info)-1 < 1){
-                User::where('cid', $request->input('cid'))->where('user_id', $old_parent_id)->delete();
-            }
-        }else{
-            $parent_id = $old_parent_id;
+        if (!empty($request->input('sibling_id'))){
+            $new_sibling_info = Students::where('cid', $request->input('cid'))->where('id', $request->input('sibling_id'))->first();
+            $new_parent_info = Students::where('cid', $request->input('cid'))->where('parent_id', $new_sibling_info->parent_id)->first();            
         }
 
-        User::where('user_id', $parent_id)->where('user_code', $request->input('user_code'))->update([
-            'user_id' => $parent_id,
-            'name' => $request->input('guardian_name'),
-            'email' => $request->input('guardian_email')
-        ]);
+
+        if (empty($request->input('sibling_id'))){
+            //remove student from any ties to old parent information
+            if (!empty($student_info->sibling_id)){
+                $parent_id = Students::where('cid', $request->input('cid'))->max('parent_id')+1;
+                $parent_info = Students::where('cid', $request->input('cid'))->where('parent_id', $student_info->parent_id)->get();
+                //since student is been removed from old parent record, check if old sibling ties is less than 1, if true; then delete parent login access
+                if (count($parent_info) <= 1){
+                    User::where('user_code', $request->input('user_code'))->where('user_id', $student_info->parent_id)->where('role_id', 6)->delete();
+                }
+                //create new parent login access
+                User::create([
+                    'user_id' => $parent_id,
+                    'user_code' => $request->input('user_code'),
+                    'name' => $request->input('guardian_name'),
+                    'role_id' => 6,
+                    'email' => $request->input('guardian_email'),
+                    'password' => bcrypt('password')
+                ]);                                     
+            }else{
+                $parent_id = $student_info->parent_id;
+            }
+        }elseif ($new_parent_info->parent_id != $student_info->parent_id){
+            $old_parent_info = Students::where('cid', $request->input('cid'))->where('parent_id', $student_info->parent_id)->get();
+            if (count($old_parent_info) <= 1){
+                User::where('user_code', $request->input('user_code'))->where('user_id', $student_info->parent_id)->where('role_id', 6)->delete();
+            }
+            Students::where('cid', $request->input('cid'))->where('id', $student_info->sibling_id)->update([
+                'sibling_id' => ''
+            ]); 
+            $parent_id = $new_parent_info->parent_id;       
+        }else{
+            //update sibling id of both students
+            Students::where('cid', $request->input('cid'))->where('id', $student_info->sibling_id)->update([
+                'sibling_id' => $request->input('id')
+            ]);            
+            $sibling_info = Students::where('id', $request->input('sibling_id'))->first();
+            $parent_id = $sibling_info->parent_id;
+            //update parent login access
+            User::where('user_id', $parent_id)->where('user_code', $request->input('user_code'))->where('role_id', 6)->update([
+                'user_id' => $parent_id,
+                'name' => $request->input('guardian_name'),
+                'email' => $request->input('guardian_email')
+            ]);
+        }
 
         $student_info->class_id = $request->input('class');
         $student_info->section_id = $request->input('section');
@@ -172,6 +203,7 @@ class StudentsController extends Controller
         $student_info->image = $request->input('image');
         $student_info->admission_date = $request->input('admission_date');
         $student_info->blood_group = $request->input('blood_group');
+        $student_info->sibling_id = $request->input('sibling_id');
         $student_info->father_name = $request->input('father_name');
         $student_info->father_occupation = $request->input('father_occupation');
         $student_info->father_phone = $request->input('father_phone');
@@ -187,12 +219,12 @@ class StudentsController extends Controller
         $student_info->guardian_address = $request->input('guardian_address');
         $student_info->save();
 
-        User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->update([
+        User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->where('role_id', 5)->update([
             'name' => $request->input('lastname').', '.$request->input('firstname').' '.$request->input('middlename'),
             'email' => $request->input('email')
         ]);
 
-        return redirect('admin/students')->with('success', 'Student Updated Successfully!');    
+        return redirect('students/details')->with('success', 'Student Updated Successfully!');    
     }
 
     /**
@@ -206,13 +238,13 @@ class StudentsController extends Controller
         $siblings = Students::where('parent_id', $request->input('parent_id'))->where('cid', $request->input('cid'))->get();
         if (count($siblings) > 1){
             Students::where('id', $request->input('id'))->delete();
-            User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->delete();
+            User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->where('role_id', 5)->delete();
         }else{
             Students::where('id', $request->input('id'))->delete();
-            User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->delete();
-            User::where('user_id', $request->input('parent_id'))->where('user_code', $request->input('user_code'))->delete();            
+            User::where('user_id', $request->input('id'))->where('user_code', $request->input('user_code'))->where('role_id', 5)->delete();
+            User::where('user_id', $request->input('parent_id'))->where('user_code', $request->input('user_code'))->where('role_id', 6)->delete();            
         }
 
-        return redirect('admin/students')->with('success', 'Student Deleted Successfully!');
+        return redirect('students/details')->with('success', 'Student Deleted Successfully!');
     }
 }

@@ -51,31 +51,7 @@
   }
 
   $(function () {
-  // $(document).ready(function(){   
-    $('#is_guardian input[type="radio"].minimal').click(function(){
-      var guardian = $(this).val();
-      var father_name = $('.modal-body input').val();
-      console.log(father_name);
-      if (guardian == 'Father'){
-        $('input[name="guardian_relation"]').val(guardian);
-        // modal.find('.modal-body #guardian_name').val(father_name);
-        // modal.find('.modal-body #guardian_phone').val(father_phone);
-        // modal.find('.modal-body #guardian_occupation').val(father_occupation);   
-      }else if(guardian == 'Mother'){
-        $('input[name="guardian_relation"]').val(guardian);
-        // modal.find('.modal-body #guardian_name').val(mother_name);
-        // modal.find('.modal-body #guardian_phone').val(mother_phone);
-        // modal.find('.modal-body #guardian_occupation').val(mother_occupation);      
-      }else if(guardian == 'Guardian'){
-        $('input[name="guardian_relation"]').val('');
-        // modal.find('.modal-body #guardian_name').val('');
-        // modal.find('.modal-body #guardian_phone').val('');
-        // modal.find('.modal-body #guardian_occupation').val('');   
-      }else{
-        alert('error');
-      }
-    }); 
-  // });
+
     //iCheck for checkbox and radio inputs
     // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
     //   checkboxClass: 'icheckbox_minimal-blue',
