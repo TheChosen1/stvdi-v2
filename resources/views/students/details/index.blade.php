@@ -18,8 +18,11 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
-@if (Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 1))
-  @foreach (Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 1) as $stdPermit)
+@php
+$stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 1);
+@endphp
+@if (!is_null($stdPermitArray))
+  @foreach ($stdPermitArray as $stdPermit)
   @endforeach
 @endif
 <!-- Main content -->
@@ -29,21 +32,24 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header d-flex btn-group">
-            @if(isset($stdPermit) != '')
-            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary" data-toggle="modal" data-target="#newStudent">
+            @if(isset($stdPermit) && $stdPermit->can_add==1)
+            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#newStudent">
               <i class="margin-right-icon fa fa-plus"></i>New Student
             </button>
             @endif
             <ul class="nav nav-pills ml-auto p-2">
+              <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Student Details</a></li>
             </ul>
           </div>       
           <div class="card-body">
             <div class="tab-content">
-            @if (count($allStudents) != '')
-              @include('students/details/table1')
-            @else
-              <div class="col-12 text-center">No Record(s) Found</div>              
-            @endif                
+              <div class="tab-pane active" id="tab_1">
+              @if (count($allStudents) != '')
+                @include('students/details/table1')
+              @else
+                <div class="col-12 text-center">No Record(s) Found</div>              
+              @endif 
+              </div>               
             </div>
             <!-- /.tab-content -->
           </div>

@@ -2,8 +2,9 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Invoice-No</th>
-      <th>Expense-Head</th>
+      <th>Inv-No</th>
+      <th>Exp-Head</th>
+      <th>Name</th>
       <th>Date</th>
       <th>Amount</th>
       <th>Action</th>
@@ -17,20 +18,21 @@
           <input class="form-check-input" name="id[]" type="checkbox" value="{{ $expense->id }}">
         </div>
       </td>
-<!--                     <td>{{$student->admission_no}}</td>
-      <td>{{ucwords(strtolower($student->lastname.', '.$student->firstname.' '.$student->middlename))}}</td>
-      <td>{{$student->class_id}}</td>
-      <td>{{$student->admision_date}}</td> -->
+      <td>{{$expense->invoice_no}}</td>
+      <td>{{ucwords(strtolower($expense->expense_head))}}</td>
+      <td>{{ucwords(strtolower($expense->name))}}</td>
+      <td>{{$expense->date}}</td>
+      <td>{{$expense->amount}}</td>
       <td>
         <div class="btn-group">
-         @if(isset($expPermit) && $expPermit != '' && $expPermit->can_edit == 1)
+         @if(isset($expPermit) && $expPermit->can_edit==1)
             <button type="button" id="editexpensebtn" class="btn btn-default" title="Edit" data-toggle="modal" data-target="#editExpense" 
             data-id="{{$expense->id}}" 
             >
               <i class="fa fa-edit"></i>
             </button>
         @endif
-        @if(isset($expPermit) && $expPermit != '' && $expPermit->can_delete == 1)
+        @if(isset($expPermit) && $expPermit->can_delete==1)
             <button type="button" id="deleteexpensebtn" class="btn btn-default" title="Delete" data-toggle="modal" data-target="#deleteExpense" 
             data-id="{{$expense->id}}" 
             >
@@ -44,8 +46,9 @@
   <tfoot>
     <tr>
       <th>ID</th>
-      <th>Invoice-No</th>
-      <th>Expense-Head</th>
+      <th>Inv-No</th>
+      <th>Exp-Head</th>
+      <th>Name</th>
       <th>Date</th>
       <th>Amount</th>
       <th>Action</th>

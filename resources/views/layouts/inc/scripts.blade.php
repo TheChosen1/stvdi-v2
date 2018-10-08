@@ -40,7 +40,11 @@
 
 <!-- page script -->
 <script>
-  //SHOW HTML ELEMENT-----
+  function showBtn(elementClass){
+    $("button[class*='btn_']").hide();
+    $('.'+elementClass).show();
+  }
+
   function hideHtmlScroll(){
     $('html').css( "overflow-y", "hidden" );
   }

@@ -23,7 +23,7 @@
       <td>{{$student->admision_date}}</td>
       <td>
         <div class="btn-group">
-        @if(isset($stdPermit) && $stdPermit != '' && $stdPermit->can_edit == 1)
+        @if(isset($stdPermit->can_edit)==1)
             <button type="button" id="editstudentbtn" class="btn btn-default" title="Edit" data-toggle="modal" data-target="#editStudent" 
             data-id="{{$student->id}}" 
             data-class="{{$student->class_id}}" 
@@ -61,7 +61,7 @@
               <i class="fa fa-edit"></i>
             </button>
         @endif
-        @if(isset($stdPermit) && $stdPermit != '' && $stdPermit->can_delete == 1)
+        @if(isset($stdPermit->can_delete)==1)
             <button type="button" id="deletestudentbtn" class="btn btn-default" title="Delete" data-toggle="modal" data-target="#deleteStudent" 
             data-id="{{$student->id}}"                        
             data-parent="{{$student->sibling_id}}"

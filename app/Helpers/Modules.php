@@ -23,7 +23,7 @@ class Modules {
     public static function getModuleListPermit($cid, $rid, $mid) 
     {
         $moduleListPermit = DB::table('roles_permissions')->where('cid','=',$cid)->where('role_id','=',$rid)->where('module_id','=',$mid)->get();
-        if (count($moduleListPermit) > 1){
+        if (count($moduleListPermit) >= 1){
             return $moduleListPermit;  
         }else{
             return null;

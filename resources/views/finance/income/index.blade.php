@@ -7,27 +7,27 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Expense</h1>
+        <h1>Income</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-          <li class="breadcrumb-item active">Expense</li>
+          <li class="breadcrumb-item active">Income</li>
         </ol>
       </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>
 @php
-$expPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 3);
-$expHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 4);
+$incPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 5);
+$incHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 6);
 @endphp
-@if (!is_null($expPermitArray))
-  @foreach ($expPermitArray as $expPermit)
+@if (!is_null($incPermitArray))
+  @foreach ($incPermitArray as $incPermit)
   @endforeach
 @endif
-@if (!is_null($expHeadPermitArray))
-  @foreach ($expHeadPermitArray as $expHeadPermit)
+@if (!is_null($incHeadPermitArray))
+  @foreach ($incHeadPermitArray as $incHeadPermit)
   @endforeach
 @endif
 <!-- Main content -->
@@ -37,33 +37,33 @@ $expHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::us
       <div class="col-12">
         <div class="card">
           <div class="card-header d-flex btn-group">
-            @if(isset($expPermit) && $expPermit->can_add==1)
-            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_1" data-toggle="modal" data-target="#newExpense">
-              <i class="margin-right-icon fa fa-plus"></i>New Expense
+            @if(isset($incPermit) && $incPermit->can_add==1)
+            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_1" data-toggle="modal" data-target="#newIncome">
+              <i class="margin-right-icon fa fa-plus"></i>New Income
             </button>
             @endif
-            @if(isset($expHeadPermit) && $expHeadPermit->can_add==1)
-            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_2" style="display: none" data-toggle="modal" data-target="#newExpenseHead">
-              <i class="margin-right-icon fa fa-plus"></i>New Expense-Head
+            @if(isset($incHeadPermit) && $incHeadPermit->can_add==1)
+            <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_2" style="display: none" data-toggle="modal" data-target="#newIncomeHead">
+              <i class="margin-right-icon fa fa-plus"></i>New Income-Head
             </button>
             @endif
             <ul class="nav nav-pills ml-auto p-2">
-              <li class="nav-item" onclick="showBtn('btn_1')"><a class="nav-link active" href="#tab_1" data-toggle="tab">Expense</a></li>
-              <li class="nav-item" onclick="showBtn('btn_2')"><a class="nav-link" href="#tab_2" data-toggle="tab">Expense Head</a></li>
+              <li class="nav-item" onclick="showBtn('btn_1')"><a class="nav-link active" href="#tab_1" data-toggle="tab">Income</a></li>
+              <li class="nav-item" onclick="showBtn('btn_2')"><a class="nav-link" href="#tab_2" data-toggle="tab">Income Head</a></li>
             </ul>             
           </div>       
           <div class="card-body">
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
-              @if (count($allExpenses) != '')
-                @include('finance/expense/table1')
+              @if (count($allIncome) != '')
+                @include('finance/income/table1')
               @else
                 <div class="col-12 text-center">No Record(s) Found</div>              
               @endif 
               </div> 
               <div class="tab-pane" id="tab_2">
-              @if (count($allExpenseHead) != '')
-                @include('finance/expense/table2')
+              @if (count($allIncomeHead) != '')
+                @include('finance/income/table2')
               @else
                 <div class="col-12 text-center">No Record(s) Found</div>              
               @endif 
@@ -83,13 +83,13 @@ $expHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::us
 <!-- /.content -->
 
 <!-- Modal-Window -->
-@include('finance/expense/create')
-@include('finance/expense/edit')
-@include('finance/expense/delete')
+@include('finance/income/create')
+@include('finance/income/edit')
+@include('finance/income/delete')
 
 <script type="text/javascript">
 
-  $('#editExpense').on('show.bs.modal', function (event) {
+  $('#editIncome').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     
     var button = $(event.relatedTarget)
@@ -101,7 +101,7 @@ $expHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::us
     modal.find('.modal-body #id').val(id)
   }) 
 
-  $('#deleteExpense').on('show.bs.modal', function (event) {
+  $('#deleteIncome').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     var button = $(event.relatedTarget)
     var id = button.data('id');
