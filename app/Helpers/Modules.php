@@ -1,9 +1,11 @@
 <?php
 //app/Helpers/Modules.php
 namespace App\Helpers;
- 
+
 use Illuminate\Support\Facades\DB;
- 
+use Auth;
+use Session; 
+
 class Modules {
     /**
      * @param int $user_id User-id
@@ -20,9 +22,9 @@ class Modules {
         $moduleList = DB::table('modules')->where('module_group_id','=',$mgid)->where('tree_view_list','=','1')->get();
         return $moduleList;
     } 
-    public static function getModuleListPermit($cid, $rid, $mid) 
+    public static function getModuleListPermit($mid) 
     {
-        $moduleListPermit = DB::table('roles_permissions')->where('cid','=',$cid)->where('role_id','=',$rid)->where('module_id','=',$mid)->get();
+        $moduleListPermit = DB::table('roles_permissions')->where('cid',Session::get('cid'))->where('role_id',Auth::user()->role_id)->where('module_id',$mid)->get();
         if (count($moduleListPermit) >= 1){
             return $moduleListPermit;  
         }else{

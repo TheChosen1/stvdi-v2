@@ -72,6 +72,13 @@
           <label>Middle Name</label>
           <input type="text" class="form-control" placeholder="Middle Name" id="middlename" name="middlename" value="{{ old('middlename') }}">
         </div>
+        <div class="col-sm-4 form-group{{ $errors->has('category') ? ' has-feedback' : '' }}">
+          <label>Category</label>
+          <select id="category" name="category" class="form-control" required>
+            <option value="1">Full Time</option>
+            <option value="2">Part Time</option>
+          </select>
+        </div>
         <div class="col-sm-4 form-group{{ $errors->has('gender') ? ' has-feedback' : '' }}">
           <label>Gender</label>
           <select name="gender" class="form-control">
@@ -143,15 +150,6 @@
               @endif              
           </div>
         </div>
-        <div class="col-sm-4 form-group{{ $errors->has('image') ? ' has-feedback' : '' }}">
-          <label for="image">Photo</label>
-          <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="image">
-              <label class="custom-file-label" for="image">Choose file</label>
-            </div>
-          </div>
-        </div>
         <div class="col-sm-4 form-group{{ $errors->has('blood_group') ? ' has-feedback' : '' }}">
           <label>Blood Group</label>
           <select id="blood_group" name="blood_group" class="form-control">
@@ -177,6 +175,15 @@
             @endif
           </select>
         </div>
+        <div class="col-sm-4 form-group{{ $errors->has('image') ? ' has-feedback' : '' }}">
+          <label for="image">Photo</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="image">
+              <label class="custom-file-label" for="image">Choose file</label>
+            </div>
+          </div>
+        </div>        
       </div>
 
     </div>

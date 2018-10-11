@@ -19,8 +19,8 @@
   </div><!-- /.container-fluid -->
 </section>
 @php
-$incPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 5);
-$incHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 6);
+$incPermitArray = Modules::getModuleListPermit(5);
+$incHeadPermitArray = Modules::getModuleListPermit(6);
 @endphp
 @if (!is_null($incPermitArray))
   @foreach ($incPermitArray as $incPermit)

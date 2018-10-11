@@ -19,8 +19,8 @@
   </div><!-- /.container-fluid -->
 </section>
 @php
-$expPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 3);
-$expHeadPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 4);
+$expPermitArray = Modules::getModuleListPermit(3);
+$expHeadPermitArray = Modules::getModuleListPermit(4);
 @endphp
 @if (!is_null($expPermitArray))
   @foreach ($expPermitArray as $expPermit)

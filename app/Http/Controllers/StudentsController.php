@@ -113,7 +113,8 @@ class StudentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $singleStudent = Students::find($id);
+        return view('students/details/show')->with('singleStudent', $singleStudent);
     }
 
     /**

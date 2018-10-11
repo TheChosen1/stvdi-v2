@@ -63,6 +63,10 @@
     // }); 
 
     $('#list-table').DataTable({
+      dom: '<"row"<"col-sm-4"l><"col-sm-4"><"col-sm-4"f>>rt<"row"<"col-sm-6"i><"col-sm-6"p>>',
+    });
+
+    $('#report-table').DataTable({
       dom: '<"row"<"col-sm-4"l><"col-sm-4"B><"col-sm-4"f>>rt<"row"<"col-sm-6"i><"col-sm-6"p>>',
       buttons: [
           {

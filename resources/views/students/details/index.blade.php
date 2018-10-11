@@ -19,7 +19,7 @@
   </div><!-- /.container-fluid -->
 </section>
 @php
-$stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()->role_id, 1);
+$stdPermitArray = Modules::getModuleListPermit(1);
 @endphp
 @if (!is_null($stdPermitArray))
   @foreach ($stdPermitArray as $stdPermit)
@@ -68,6 +68,7 @@ $stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()
 @include('students/details/create')
 @include('students/details/edit')
 @include('students/details/delete')
+@include('students/details/show')
 
 <script type="text/javascript">
   //Initialize Select2 Elements
@@ -96,6 +97,7 @@ $stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()
     var image = button.data('image');
     var blood_group = button.data('bloodgroup');
     var sibling_id = button.data('sibling');
+    var category_id = button.data('category');
     var father_name = button.data('fathername'); 
     var father_phone = button.data('fatherphone');
     var father_occupation = button.data('fatheroccupation');                         
@@ -118,6 +120,7 @@ $stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()
     modal.find('.modal-body #id').val(id)
     modal.find('.modal-body #class').val(class_id)
     modal.find('.modal-body #section').val(section_id)
+    modal.find('.modal-body #category').val(category_id)
     modal.find('.modal-body #admission_no').val(admission_no)
     modal.find('.modal-body #lastname').val(lastname)
     modal.find('.modal-body #firstname').val(firstname)
@@ -168,6 +171,75 @@ $stdPermitArray = Modules::getModuleListPermit(Session::get('cid'), Auth::user()
     var modal = $(this)
     modal.find('.modal-body #id').val(id)
     modal.find('.modal-body #sibling_id').val(sibling_id)
+  }) 
+
+  $('#student').on('show.bs.modal', function (event) {
+    $('html').css( "overflow-y", "hidden" );
+    var button = $(event.relatedTarget)
+    var id = button.data('id');
+    var classe = button.data('class');
+    var section = button.data('section');
+    var ccode = button.data('ccode');
+    var scode = button.data('scode');
+    var level = button.data('level');
+    var admission_no = button.data('admissionno');
+    var lastname = button.data('lastname');
+    var firstname = button.data('firstname');
+    var middlename = button.data('middlename');
+    var gender = button.data('gender');
+    var religion = button.data('religion');
+    var dob = button.data('dob');
+    var email = button.data('email');
+    var mobileno = button.data('mobileno');
+    var admission_date = button.data('admissiondate');
+    var image = button.data('image');
+    var blood_group = button.data('bloodgroup');
+    var sibling_id = button.data('sibling');
+    var category = button.data('category');
+    var father_name = button.data('fathername'); 
+    var father_phone = button.data('fatherphone');
+    var father_occupation = button.data('fatheroccupation');                         
+    var mother_name = button.data('mothername'); 
+    var mother_phone = button.data('motherphone');
+    var mother_occupation = button.data('motheroccupation');
+    var guardian_name = button.data('guardianname');
+    var is_guardian = button.data('isguardian');  
+    var guardian_phone = button.data('guardianphone');
+    var guardian_occupation = button.data('guardianoccupation');
+    var guardian_email = button.data('guardianemail'); 
+    var guardian_relation = button.data('guardianrelation'); 
+    var guardian_address = button.data('guardianaddress'); 
+    var father_photo = button.data('fatherphoto');
+    var mother_photo = button.data('motherphoto');
+    var guardian_photo = button.data('guardianphoto');
+
+    var modal = $(this)
+    modal.find('.modal-body .fullname').html(lastname+', '+firstname+' '+middlename)
+    modal.find('.modal-body .category').html(category)
+    modal.find('.modal-body .admission_no').html(admission_no)
+    modal.find('.modal-body .admission_date').html(admission_date)
+    modal.find('.modal-body .student_name').html(lastname+', '+firstname)
+    modal.find('.modal-body .address').html(guardian_address)
+    modal.find('.modal-body .mobileno').html(mobileno)
+    modal.find('.modal-body .gender').html(gender)
+    modal.find('.modal-body .dob').html(dob)
+    modal.find('.modal-body .email').html(email)
+    modal.find('.modal-body .ccode').html(ccode)
+    modal.find('.modal-body .scode').html(scode)
+    modal.find('.modal-body .level').html(level)
+    modal.find('.modal-body .study').html(classe+', '+section)
+    modal.find('.modal-body .mother_name').html(mother_name)
+    modal.find('.modal-body .mother_phone').html(mother_phone)
+    modal.find('.modal-body .mother_occupation').html(mother_occupation)
+    modal.find('.modal-body .father_name').html(father_name)
+    modal.find('.modal-body .father_phone').html(father_phone)
+    modal.find('.modal-body .father_occupation').html(father_occupation)
+    modal.find('.modal-body .guardian_name').html(guardian_name)
+    modal.find('.modal-body .guardian_phone').html(guardian_phone)
+    modal.find('.modal-body .guardian_occupation').html(guardian_occupation)
+    modal.find('.modal-body .guardian_relation').html(guardian_relation)  
+    modal.find('.modal-body .guardian_email').html(guardian_email)
+    modal.find('.modal-body .guardian_address').html(guardian_address)
   }) 
 </script>
 
