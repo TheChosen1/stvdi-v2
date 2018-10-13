@@ -1,15 +1,15 @@
 <!-- Modal -->
-<div class="modal fade" id="deleteIncome" role="dialog" aria-labelledby="deleteIncomeTitle" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="deleteIncomeHead" role="dialog" aria-labelledby="deleteIncomeHeadTitle" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-dialog-mini" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h5 class="modal-title" id="deleteIncomeTitle">Delete Income Record</h5>
+        <h5 class="modal-title" id="deleteIncomeHeadTitle">Delete Income-Head Record</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="showHtmlScroll()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form role="form" class="" method="POST" action="{{route('income.destroy','delete')}}"> 
+        <form role="form" class="" method="POST" action="{{route('income.destroyhead','delete')}}"> 
           {{method_field('DELETE')}}
           {{ csrf_field() }} 
           <input id="id" name="id" type="hidden" value=""></input>

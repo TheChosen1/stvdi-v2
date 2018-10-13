@@ -15,13 +15,15 @@
           <input class="form-check-input" name="id[]" type="checkbox" value="{{ $incomeHead->id }}">
         </div>
       </td>
-      <td>{{ucwords(strtolower($incomeHead->inc_category))}}</td>
-      <td>{{ucwords(strtolower($incomeHead->description))}}</td>
+      <td>{{ucwords(strtolower($incomeHead->inc_head))}}</td>
+      <td>{{$incomeHead->note}}</td>
       <td>
         <div class="btn-group">
         @if(isset($incHeadPermit) && $incHeadPermit->can_edit==1)
             <button type="button" id="editincomeheadbtn" class="btn btn-default" title="Edit" data-toggle="modal" data-target="#editIncomeHead" 
             data-id="{{$incomeHead->id}}" 
+            data-inchead="{{$incomeHead->inc_head}}"
+            data-note="{{$incomeHead->note}}"
             >
               <i class="fa fa-edit"></i>
             </button>

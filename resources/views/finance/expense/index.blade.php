@@ -36,7 +36,7 @@ $expHeadPermitArray = Modules::getModuleListPermit(4);
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="card-header d-flex btn-group">
+          <div class="card-header d-flex btn-group" id="tabBtn">
             @if(isset($expPermit) && $expPermit->can_add==1)
             <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_1" data-toggle="modal" data-target="#newExpense">
               <i class="margin-right-icon fa fa-plus"></i>New Expense
@@ -47,7 +47,7 @@ $expHeadPermitArray = Modules::getModuleListPermit(4);
               <i class="margin-right-icon fa fa-plus"></i>New Expense-Head
             </button>
             @endif
-            <ul class="nav nav-pills ml-auto p-2">
+            <ul class="nav nav-pills ml-auto p-2" id="tabMenu">
               <li class="nav-item" onclick="showBtn('btn_1')"><a class="nav-link active" href="#tab_1" data-toggle="tab">Expense</a></li>
               <li class="nav-item" onclick="showBtn('btn_2')"><a class="nav-link" href="#tab_2" data-toggle="tab">Expense Head</a></li>
             </ul>             
@@ -55,7 +55,7 @@ $expHeadPermitArray = Modules::getModuleListPermit(4);
           <div class="card-body">
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
-              @if (count($allExpenses) != '')
+              @if (count($allExpense) != '')
                 @include('finance/expense/table1')
               @else
                 <div class="col-12 text-center">No Record(s) Found</div>              
@@ -86,22 +86,57 @@ $expHeadPermitArray = Modules::getModuleListPermit(4);
 @include('finance/expense/create')
 @include('finance/expense/edit')
 @include('finance/expense/delete')
+@include('finance/expense/createhead')
+@include('finance/expense/edithead')
+@include('finance/expense/deletehead')
 
 <script type="text/javascript">
+  //redirect to specific tab
+  $(document).ready(function () {
+    $('#tabMenu a[href="#{{ old('tab') }}"]').tab('show')
+    $("button[class*='btn_']").not('.{{ old('btn') }}').hide();
+    $('.{{ old('btn') }}').show();    
+  });
 
   $('#editExpense').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     
     var button = $(event.relatedTarget)
     var id = button.data('id');
+    var expensehead = button.data('expensehead');
+    var name = button.data('name');
+    var date = button.data('date');
+    var amount = button.data('amount');
+    var note = button.data('note');
    
     // console.log(firstname+' '+lastname)
 
     var modal = $(this)
     modal.find('.modal-body #id').val(id)
+    modal.find('.modal-body #exp_head_id').val(expensehead)
+    modal.find('.modal-body #name').val(name)
+    modal.find('.modal-body #date').val(date)
+    modal.find('.modal-body #amount').val(amount)
+    modal.find('.modal-body #note').val(note)
   }) 
 
-  $('#deleteExpense').on('show.bs.modal', function (event) {
+  $('#editExpenseHead').on('show.bs.modal', function (event) {
+    $('html').css( "overflow-y", "hidden" );
+    
+    var button = $(event.relatedTarget)
+    var id = button.data('id');
+    var exp_head = button.data('exphead');
+    var note = button.data('note');
+   
+    // console.log(firstname+' '+lastname)
+
+    var modal = $(this)
+    modal.find('.modal-body #id').val(id)
+    modal.find('.modal-body #exp_head').val(exp_head)
+    modal.find('.modal-body #note').val(note)
+  }) 
+  
+  $('#deleteExpense, #deleteExpenseHead').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     var button = $(event.relatedTarget)
     var id = button.data('id');
@@ -109,6 +144,7 @@ $expHeadPermitArray = Modules::getModuleListPermit(4);
     var modal = $(this)
     modal.find('.modal-body #id').val(id)
   }) 
+
 </script>
 
 @endsection

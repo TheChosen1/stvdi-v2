@@ -19,15 +19,20 @@
         </div>
       </td>
       <td>{{$income->invoice_no}}</td>
-      <td>{{ucwords(strtolower($income->income_head))}}</td>
+      <td>{{ucwords(strtolower(Designation::getIncomeHeadField($income->inc_head_id ,'inc_head')))}}</td>
       <td>{{ucwords(strtolower($income->name))}}</td>
       <td>{{$income->date}}</td>
-      <td>{{$income->amount}}</td>
+      <td>{{number_format($income->amount,2)}}</td>
       <td>
         <div class="btn-group">
          @if(isset($incPermit) && $incPermit->can_edit==1)
             <button type="button" id="editincomebtn" class="btn btn-default" title="Edit" data-toggle="modal" data-target="#editIncome" 
             data-id="{{$income->id}}" 
+            data-incomehead="{{$income->inc_head_id}}" 
+            data-name="{{ucwords(strtolower($income->name))}}" 
+            data-date="{{$income->date}}" 
+            data-amount="{{$income->amount}}"
+            data-note="{{$income->note}}"            
             >
               <i class="fa fa-edit"></i>
             </button>

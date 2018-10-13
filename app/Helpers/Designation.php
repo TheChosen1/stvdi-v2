@@ -40,4 +40,16 @@ class Designation {
         $level = DB::table('levels')->where('cid',Session::get('cid'))->where('is_active','1')->where('id',$level_id)->first();
         return $level->$field;
     }
+
+    public static function getIncomeHeadField($income_head_id, $field) 
+    {
+        $incomeHead = DB::table('income_head')->where('cid',Session::get('cid'))->where('id',$income_head_id)->first();
+        return $incomeHead->$field;
+    }
+
+    public static function getExpenseHeadField($expense_head_id, $field) 
+    {
+        $expenseHead = DB::table('expense_head')->where('cid',Session::get('cid'))->where('id',$expense_head_id)->first();
+        return $expenseHead->$field;
+    }
 }

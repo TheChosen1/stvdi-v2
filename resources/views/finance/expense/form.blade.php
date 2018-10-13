@@ -5,19 +5,19 @@
         <input id="cid" name="cid" type="hidden" value="{{ Session::get('cid') }}"></input>
         <input id="education_id" name="education_id" type="hidden" value="{{ Session::get('education_id') }}"></input>
         <input id="user_code" name="user_code" type="hidden" value="{{ Session::get('client_code') }}"></input>
-        <div class="col-sm-6 form-group{{ $errors->has('inc_head_id') ? ' has-feedback' : '' }}">
-          <label>Income Head <code>*</code></label>
-          <select id="inc_head_id" name="inc_head_id" class="form-control" required>
+        <div class="col-sm-6 form-group{{ $errors->has('exp_head_id') ? ' has-feedback' : '' }}">
+          <label>Expense Head <code>*</code></label>
+          <select id="exp_head_id" name="exp_head_id" class="form-control" required>
             <option value="">None</option>
-            @if (count($allIncomeHead) != '')
-              @foreach ($allIncomeHead as $incomeHead)
-            <option value="{{$incomeHead->id}}">{{ucwords(strtolower($incomeHead->inc_head))}}</option>
+            @if (count($allExpenseHead) != '')
+              @foreach ($allExpenseHead as $expenseHead)
+            <option value="{{$expenseHead->id}}">{{ucwords(strtolower($expenseHead->exp_head))}}</option>
               @endforeach
             @endif
           </select>
-             @if ($errors->has('inc_head_id'))
+             @if ($errors->has('exp_head_id'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('inc_head_id') }}</strong>
+                    <strong>{{ $errors->first('exp_head_id') }}</strong>
                 </span>
             @endif
         </div> 

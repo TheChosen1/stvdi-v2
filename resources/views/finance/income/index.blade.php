@@ -36,7 +36,7 @@ $incHeadPermitArray = Modules::getModuleListPermit(6);
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="card-header d-flex btn-group">
+          <div class="card-header d-flex btn-group" id="tabBtn">
             @if(isset($incPermit) && $incPermit->can_add==1)
             <button type="button" onclick="hideHtmlScroll()" class="btn btn-primary btn-flat btn_1" data-toggle="modal" data-target="#newIncome">
               <i class="margin-right-icon fa fa-plus"></i>New Income
@@ -47,7 +47,7 @@ $incHeadPermitArray = Modules::getModuleListPermit(6);
               <i class="margin-right-icon fa fa-plus"></i>New Income-Head
             </button>
             @endif
-            <ul class="nav nav-pills ml-auto p-2">
+            <ul class="nav nav-pills ml-auto p-2" id="tabMenu">
               <li class="nav-item" onclick="showBtn('btn_1')"><a class="nav-link active" href="#tab_1" data-toggle="tab">Income</a></li>
               <li class="nav-item" onclick="showBtn('btn_2')"><a class="nav-link" href="#tab_2" data-toggle="tab">Income Head</a></li>
             </ul>             
@@ -86,22 +86,57 @@ $incHeadPermitArray = Modules::getModuleListPermit(6);
 @include('finance/income/create')
 @include('finance/income/edit')
 @include('finance/income/delete')
+@include('finance/income/createhead')
+@include('finance/income/edithead')
+@include('finance/income/deletehead')
 
 <script type="text/javascript">
+  //redirect to specific tab
+  $(document).ready(function () {
+    $('#tabMenu a[href="#{{ old('tab') }}"]').tab('show')
+    $("button[class*='btn_']").not('.{{ old('btn') }}').hide();
+    $('.{{ old('btn') }}').show();    
+  });
 
   $('#editIncome').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     
     var button = $(event.relatedTarget)
     var id = button.data('id');
+    var incomehead = button.data('incomehead');
+    var name = button.data('name');
+    var date = button.data('date');
+    var amount = button.data('amount');
+    var note = button.data('note');
    
     // console.log(firstname+' '+lastname)
 
     var modal = $(this)
     modal.find('.modal-body #id').val(id)
+    modal.find('.modal-body #inc_head_id').val(incomehead)
+    modal.find('.modal-body #name').val(name)
+    modal.find('.modal-body #date').val(date)
+    modal.find('.modal-body #amount').val(amount)
+    modal.find('.modal-body #note').val(note)
   }) 
 
-  $('#deleteIncome').on('show.bs.modal', function (event) {
+  $('#editIncomeHead').on('show.bs.modal', function (event) {
+    $('html').css( "overflow-y", "hidden" );
+    
+    var button = $(event.relatedTarget)
+    var id = button.data('id');
+    var inc_head = button.data('inchead');
+    var note = button.data('note');
+   
+    // console.log(firstname+' '+lastname)
+
+    var modal = $(this)
+    modal.find('.modal-body #id').val(id)
+    modal.find('.modal-body #inc_head').val(inc_head)
+    modal.find('.modal-body #note').val(note)
+  }) 
+  
+  $('#deleteIncome, #deleteIncomeHead').on('show.bs.modal', function (event) {
     $('html').css( "overflow-y", "hidden" );
     var button = $(event.relatedTarget)
     var id = button.data('id');
@@ -109,6 +144,7 @@ $incHeadPermitArray = Modules::getModuleListPermit(6);
     var modal = $(this)
     modal.find('.modal-body #id').val(id)
   }) 
+
 </script>
 
 @endsection

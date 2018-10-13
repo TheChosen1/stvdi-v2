@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-  @foreach ($allExpenses as $expense) 
+  @foreach ($allExpense as $expense) 
     <tr>
       <td>                   
         <div class="form-check">
@@ -19,15 +19,20 @@
         </div>
       </td>
       <td>{{$expense->invoice_no}}</td>
-      <td>{{ucwords(strtolower($expense->expense_head))}}</td>
-      <td>{{ucwords(strtolower($expense->name))}}</td>
+      <td>{{ucwords(strtolower(Designation::getExpenseHeadField($expense->exp_head_id ,'exp_head')))}}</td>
+      <td>{{$expense->name}}</td>
       <td>{{$expense->date}}</td>
-      <td>{{$expense->amount}}</td>
+      <td>{{number_format($expense->amount,2)}}</td>
       <td>
         <div class="btn-group">
          @if(isset($expPermit) && $expPermit->can_edit==1)
             <button type="button" id="editexpensebtn" class="btn btn-default" title="Edit" data-toggle="modal" data-target="#editExpense" 
             data-id="{{$expense->id}}" 
+            data-expensehead="{{$expense->exp_head_id}}" 
+            data-name="{{$expense->name}}" 
+            data-date="{{$expense->date}}" 
+            data-amount="{{$expense->amount}}"
+            data-note="{{$expense->note}}"            
             >
               <i class="fa fa-edit"></i>
             </button>
