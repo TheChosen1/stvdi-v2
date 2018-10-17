@@ -1,30 +1,27 @@
 <!-- Modal -->
-<div class="modal fade" id="editIncome" role="dialog" aria-labelledby="editIncomeTitle" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="newTransactionHead" role="dialog" aria-labelledby="newTransactionHeadTitle" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-dialog-mini" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h5 class="modal-title" id="editIncomeTitle">Edit Income Record</h5>
+        <h5 class="modal-title" id="newTransactionHeadTitle">Add Transaction-Head Record</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="showHtmlScroll()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      	<form role="form" class="" method="POST" action="{{route('income.update','update')}}"> 
-          {{method_field('PATCH')}}
+        <form role="form" class="" method="POST" action="{{route('transaction.storehead')}}">
           {{ csrf_field() }} 
-          <input id="id" name="id" type="hidden" value=""></input>
 
-          @include('finance/income/form')
+          @include('finance/transaction/formhead')
           
           <div class="modal-footer">
             <button class="btn btn-secondary" data-dismiss="modal" onclick="showHtmlScroll()">Close</button>
-            <button type="submit" class="btn btn-primary">Update changes</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
           </div>
         </form>    
       </div>
     </div>
   </div>
 </div> 
-
 
 

@@ -17,6 +17,12 @@ class Designation {
         return $designation;
     }
 
+    public static function getSessionField($session_id, $field) 
+    {
+        $session = DB::table('sessions')->where('cid',Session::get('cid'))->where('id',$session_id)->first();
+        return $session->$field;
+    }
+
     public static function getCategoryField($category_id, $field) 
     {
         $category = DB::table('categories')->where('cid',Session::get('cid'))->where('is_active','1')->where('id',$category_id)->first();
@@ -41,15 +47,15 @@ class Designation {
         return $level->$field;
     }
 
-    public static function getIncomeHeadField($income_head_id, $field) 
+    public static function getTransHeadField($trans_head_id, $field) 
     {
-        $incomeHead = DB::table('income_head')->where('cid',Session::get('cid'))->where('id',$income_head_id)->first();
-        return $incomeHead->$field;
+        $transHead = DB::table('transaction_head')->where('cid',Session::get('cid'))->where('id',$trans_head_id)->first();
+        return $transHead->$field;
     }
 
-    public static function getExpenseHeadField($expense_head_id, $field) 
+    public static function getTransTypeField($trans_type_id, $field) 
     {
-        $expenseHead = DB::table('expense_head')->where('cid',Session::get('cid'))->where('id',$expense_head_id)->first();
-        return $expenseHead->$field;
+        $transType = DB::table('transaction_type')->where('id',$trans_type_id)->first();
+        return $transType->$field;
     }
 }

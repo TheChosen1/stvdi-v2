@@ -71,8 +71,7 @@ $stdPermitArray = Modules::getModuleListPermit(1);
 @include('students/details/show')
 
 <script type="text/javascript">
-  //Initialize Select2 Elements
-  $('.select2').select2();
+
   $('#dob').inputmask('yyyy-mm-dd', { 'placeholder': 'yyyy-mm-dd' })
   $('#admission_date').inputmask('yyyy-mm-dd', { 'placeholder': 'yyyy-mm-dd' })
   // $('#mobileno, #guardian_phone, #father_phone, #mother_phone').inputmask('(999)-999-999-9999', { 'placeholder': '' })
@@ -190,6 +189,7 @@ $stdPermitArray = Modules::getModuleListPermit(1);
     var religion = button.data('religion');
     var dob = button.data('dob');
     var email = button.data('email');
+    var image = button.data('image');
     var mobileno = button.data('mobileno');
     var admission_date = button.data('admissiondate');
     var image = button.data('image');
@@ -222,6 +222,7 @@ $stdPermitArray = Modules::getModuleListPermit(1);
     modal.find('.modal-body .address').html(guardian_address)
     modal.find('.modal-body .mobileno').html(mobileno)
     modal.find('.modal-body .gender').html(gender)
+    modal.find('.modal-body .profileImg').attr("src","../storage/media/"+image);
     modal.find('.modal-body .dob').html(dob)
     modal.find('.modal-body .email').html(email)
     modal.find('.modal-body .ccode').html(ccode)

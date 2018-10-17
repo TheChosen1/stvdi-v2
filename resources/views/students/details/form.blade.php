@@ -24,10 +24,6 @@
           <label>Class <code>*</code></label>
           <select id="class" name="class" class="form-control" required>
             <option value="">Select</option>
-            <option value="1">J.S.S 1</option>
-            <option value="2">J.S.S 2</option>
-            <option value="3">J.S.S 3</option>
-            <option value="4">S.S.S 1</option>
             <option value="5">S.S.S 2</option>
             <option value="6">S.S.S 3</option>
           </select>
@@ -41,8 +37,8 @@
           <label>Section <code>*</code></label>
           <select id="section" name="section" class="form-control" required>
             <option value="">Select</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
+            <option value="6">A</option>
+            <option value="7">B</option>
           </select>
             @if ($errors->has('section'))
                 <span class="help-block">
@@ -179,7 +175,7 @@
           <label for="image">Photo</label>
           <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="image">
+              <input type="file" class="custom-file-input" id="image" name="image">
               <label class="custom-file-label" for="image">Choose file</label>
             </div>
           </div>
@@ -301,7 +297,7 @@
           <label for="father_pic">Father's Photo</label>
           <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="father_pic">
+              <input type="file" class="custom-file-input" id="father_pic" name="father_pic">
               <label class="custom-file-label" for="image">Choose file</label>
             </div>
           </div>
@@ -310,7 +306,7 @@
           <label for="mother_pic">Mother's Photo</label>
           <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="mother_pic">
+              <input type="file" class="custom-file-input" id="mother_pic" name="mother_pic">
               <label class="custom-file-label" for="image">Choose file</label>
             </div>
           </div>
@@ -319,7 +315,7 @@
           <label for="guardian_pic">Guardian's Photo</label>
           <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="guardian_pic">
+              <input type="file" class="custom-file-input" id="guardian_pic" name="guardian_pic">
               <label class="custom-file-label" for="image">Choose file</label>
             </div>
           </div>

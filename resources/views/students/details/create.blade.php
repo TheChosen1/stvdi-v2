@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form role="form" class="" method="POST" action="{{route('details.store')}}"> 
+        <form role="form" class="" method="POST" action="{{route('details.store')}}" enctype="multipart/form-data"> 
           {{ csrf_field() }} 
 
           @include('students/details/form')

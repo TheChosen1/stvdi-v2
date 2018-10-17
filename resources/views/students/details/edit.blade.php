@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form role="form" class="" method="POST" action="{{route('details.update','update')}}"> 
+        <form role="form" class="" method="POST" action="{{route('details.update','update')}}" enctype="multipart/form-data"> 
           {{method_field('PATCH')}}
           {{ csrf_field() }} 
           <input id="id" name="id" type="hidden" value=""></input>

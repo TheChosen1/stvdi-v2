@@ -6,7 +6,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">{{'Academic Session: '}}</a>
+        <a href="#" class="nav-link">{{'Academic Session: '.Designation::getSessionField(Session::get('session_id'), 'session')}}</a>
       </li>
     </ul>
 

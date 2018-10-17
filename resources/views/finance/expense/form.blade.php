@@ -7,7 +7,7 @@
         <input id="user_code" name="user_code" type="hidden" value="{{ Session::get('client_code') }}"></input>
         <div class="col-sm-6 form-group{{ $errors->has('exp_head_id') ? ' has-feedback' : '' }}">
           <label>Expense Head <code>*</code></label>
-          <select id="exp_head_id" name="exp_head_id" class="form-control" required>
+          <select id="exp_head_id" name="exp_head_id" class="form-control" required autofocus>
             <option value="">None</option>
             @if (count($allExpenseHead) != '')
               @foreach ($allExpenseHead as $expenseHead)

@@ -24,7 +24,7 @@
                     <h5 class="widget-user-desc admission_no"></h5>
                   </div>
                   <div class="widget-user-image">
-                    <img class="img-circle" src="../dist/img/user3-128x128.jpg" alt="User Avatar">
+                    <img class="img-circle profileImg" src="" style="width: 80px;" alt="User Avatar">
                   </div>
                   <div class="card-footer">
                     <div class="row">

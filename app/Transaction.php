@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExpenseHead extends Model
+class Transaction extends Model
 {
-	protected $table = 'expense_head';
+	protected $table = 'transaction';
 }

@@ -55,18 +55,30 @@
   }
 
   $(function () {
-
+    //Initialize Select2 Elements
+    $('.select2').select2();
+  
+    //display filename of uploaded file
+    $('.custom-file input').change(function (e) {
+        $(this).next('.custom-file-label').html(e.target.files[0].name);
+        // var files = [];
+        // for (var i = 0; i < $(this)[0].files.length; i++) {
+        //     files.push($(this)[0].files[i].name);
+        // }
+        // $(this).next('.custom-file-label').html(files.join(', '));
+    });
+    
     //iCheck for checkbox and radio inputs
     // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
     //   checkboxClass: 'icheckbox_minimal-blue',
     //   radioClass   : 'iradio_minimal-blue'
     // }); 
 
-    $('#list-table').DataTable({
+    $('.list-table').DataTable({
       dom: '<"row"<"col-sm-4"l><"col-sm-4"><"col-sm-4"f>>rt<"row"<"col-sm-6"i><"col-sm-6"p>>',
     });
 
-    $('#report-table').DataTable({
+    $('.report-table').DataTable({
       dom: '<"row"<"col-sm-4"l><"col-sm-4"B><"col-sm-4"f>>rt<"row"<"col-sm-6"i><"col-sm-6"p>>',
       buttons: [
           {

@@ -38,7 +38,32 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        $student = new Students;
+        $student = new Students;   
+
+        //validate file upload
+        $this->validate($request, [
+            'image' => 'image|nullable|max:1999'
+        ]);
+
+        //handle file upload
+        if($request->hasFile('image')){
+            //get filename with extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            //get only filename
+            // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //get only extension
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //make unique filename with extension
+            $fileNameToStore = $this-clean($request->input('admission_no')).'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('image')->storeAs('public/media', $fileNameToStore);
+        }else{
+            if ($request->input('gender') == 'Male'){
+                $fileNameToStore = 'no-profile-photo-master.jpg';
+            }else{
+                $fileNameToStore = 'no-profile-photo-female.jpg';
+            }
+        }
         
         if (empty($request->input('sibling_id'))){
             $parent_id = Students::where('cid', $request->input('cid'))->max('parent_id')+1;
@@ -68,7 +93,7 @@ class StudentsController extends Controller
         $student->mobileno = $request->input('mobileno');
         $student->dob = $request->input('dob');
         $student->email = $request->input('email');
-        $student->image = $request->input('image');
+        $student->image = $fileNameToStore;
         $student->admission_date = $request->input('admission_date');
         $student->blood_group = $request->input('blood_group');
         $student->father_name = $request->input('father_name');
@@ -137,8 +162,34 @@ class StudentsController extends Controller
      */
     public function update(Request $request)
     {
+
         //get stored student details
         $student_info = Students::find($request->input('id'));
+
+        //validate file upload
+        $this->validate($request, [
+            'image' => 'image|nullable|max:1999'
+        ]);
+
+        //handle file upload
+        if($request->hasFile('image')){
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            //get only filename of new image record
+            $filenamenew = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //get only filename of old image record
+            $filenameold = pathinfo($student_info->image, PATHINFO_FILENAME);
+            //get only extension of new file
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //update filename with extension
+            if (strpos($filenameold, 'no-profile-photo') !== false){
+                $fileNameToStore = $this->clean($filenamenew).'_'.time().'.'.$extension;
+            }else{
+                $fileNameToStore = $filenameold.'.'.$extension;
+            }
+            //upload image
+            $path = $request->file('image')->storeAs('public/media', $fileNameToStore);
+        }  
+
         if (!empty($request->input('sibling_id'))){
             $new_sibling_info = Students::where('cid', $request->input('cid'))->where('id', $request->input('sibling_id'))->first();
             $new_parent_info = Students::where('cid', $request->input('cid'))->where('parent_id', $new_sibling_info->parent_id)->first();            
@@ -201,7 +252,9 @@ class StudentsController extends Controller
         $student_info->mobileno = $request->input('mobileno');
         $student_info->dob = $request->input('dob');
         $student_info->email = $request->input('email');
-        $student_info->image = $request->input('image');
+        if($request->hasFile('image')){
+            $student_info->image = $fileNameToStore;
+        }
         $student_info->admission_date = $request->input('admission_date');
         $student_info->blood_group = $request->input('blood_group');
         $student_info->sibling_id = $request->input('sibling_id');
@@ -247,5 +300,12 @@ class StudentsController extends Controller
         }
 
         return redirect('students/details')->with('success', 'Student Deleted Successfully!');
+    }
+
+    public function clean($string) 
+    {
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+       return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
     }
 }

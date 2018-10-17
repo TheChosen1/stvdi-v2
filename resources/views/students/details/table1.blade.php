@@ -1,4 +1,4 @@
-<table id="list-table" class="table table-bordered table-striped">
+<table class="table table-bordered table-striped list-table">
   <thead>
     <tr>
       <th>ID</th>
